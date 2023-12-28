@@ -10,8 +10,8 @@ app.use(express.json());
 app.use(
   cors({
     origin: FRONTEND_URL,
-    credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type'],
   })
 );
 app.use('/books', booksRouter);

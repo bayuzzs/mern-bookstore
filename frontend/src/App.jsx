@@ -5,6 +5,7 @@ const route = createBrowserRouter([
   {
     path: '/',
     element: <Home />,
+    errorElement: <h1>Error Bos</h1>,
   },
   {
     path: '/books/create',
