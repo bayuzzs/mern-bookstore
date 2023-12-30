@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BackButton, Spinner } from '../components';
+import { useSnackbar } from 'notistack';
 const { VITE_API_URL } = import.meta.env;
 
 const DeleteBook = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
+  const { enqueueSnackbar } = useSnackbar();
 
   function deleteHandleBook() {
     setLoading(true);
@@ -15,11 +17,16 @@ const DeleteBook = () => {
       .delete(`${VITE_API_URL}/books/${id}`)
       .then(() => {
         setLoading(false);
+        enqueueSnackbar('Book created successfully', {
+          variant: 'success',
+        });
         navigate('/');
       })
       .catch((err) => {
         setLoading(false);
-        alert('An error happened please check console');
+        enqueueSnackbar('An error happened please check console', {
+          variant: 'error',
+        });
         console.log(err);
       });
   }

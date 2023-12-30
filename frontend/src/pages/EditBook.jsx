@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { BackButton, Spinner } from '../components';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 const { VITE_API_URL } = import.meta.env;
 
 const EditBook = () => {
@@ -11,6 +12,7 @@ const EditBook = () => {
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     axios
@@ -38,11 +40,16 @@ const EditBook = () => {
       .put(`${VITE_API_URL}/books/${id}`, data)
       .then(() => {
         setLoading(false);
+        enqueueSnackbar('Book created successfully', {
+          variant: 'success',
+        });
         navigate('/');
       })
       .catch((err) => {
         setLoading(false);
-        alert('An error happened please check console');
+        enqueueSnackbar('An error happened please check console', {
+          variant: 'error',
+        });
         console.log(err);
       });
   }
